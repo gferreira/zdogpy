@@ -1,4 +1,6 @@
 from importlib import reload
+import zDogPy.boilerplate
+reload(zDogPy.boilerplate)
 import zDogPy.illustration
 reload(zDogPy.illustration)
 import zDogPy.rect
@@ -11,29 +13,25 @@ from zDogPy.illustration import Illustration
 from zDogPy.rect import Rect
 from zDogPy.ellipse import Ellipse
 
-illo = Illustration()
-illo.centered = True
-illo.setSize(50, 50)
+I = Illustration()
+I.color = '#FDB'
+I.centered = True
+I.setSize(240, 240)
 
-Ellipse(addTo=illo, diameter=20, stroke=1, color=(1, 0, 0), fill=False, quarters=4)
-Rect(addTo=illo, width=20, height=20, stroke=3, color=(0, 1, 1), fill=True, translate=dict(z=-10))
+E = Ellipse(addTo=I,
+    diameter=80,
+    stroke=20,
+    color='#636',
+    fill=False,
+    translate=dict(z=40))
 
-Variable([
-    dict(name="rotateX", ui="Slider", args=dict(value=0, minValue=0, maxValue=TAU/4)),
-    dict(name="rotateY", ui="Slider", args=dict(value=0, minValue=0, maxValue=TAU/4)),
-    dict(name="rotateZ", ui="Slider", args=dict(value=0, minValue=0, maxValue=TAU/4)),
-    # dict(name="translateX", ui="Slider", args=dict(value=0, minValue=-100, maxValue=100)),
-    # dict(name="scaleX", ui="Slider", args=dict(value=1, minValue=1, maxValue=2)),
-    # dict(name="scaleY", ui="Slider", args=dict(value=1, minValue=1, maxValue=2)),
-], globals())
+R = Rect(addTo=I,
+    width=80,
+    height=80,
+    stroke=12,
+    color='#E62',
+    fill=True,
+    translate=dict(z=-40))
 
-illo.rotate.x = rotateX
-illo.rotate.y = rotateY
-illo.rotate.z = rotateZ
-
-# illo.translate.x = translateX
-# illo.scale.x = scaleX
-# illo.scale.y = scaleY
-
-illo.updateRenderGraph()
-
+I.showInterface()
+I.updateRenderGraph()

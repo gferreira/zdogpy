@@ -178,14 +178,3 @@ class Anchor(Vector):
 
     # def getSubclass(self):
     #     pass
-
-
-if __name__ == '__main__':
-
-    A = Anchor(translate=dict(y=10))
-    print(A, A.renderOrigin)
-    # print()
-
-    A.transform(Vector(10), Vector(TAU/4), Vector(2))
-    # print(A, A.renderOrigin)
-

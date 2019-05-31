@@ -26,10 +26,3 @@ class Rect(Shape):
             { 'x' : -x, 'y' :  y },
         ]
         return self
-
-if __name__ == '__main__':
-
-    R = Rect()
-    print(R)
-    print(R.width, R.height)
-    print(R.front)

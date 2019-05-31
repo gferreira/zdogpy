@@ -1,6 +1,7 @@
 '''DrawBotRenderer'''
 
 import drawBot as ctx
+from zDogPy.boilerplate import hexToRGB
 
 class DrawBotRenderer:
 
@@ -44,6 +45,10 @@ class DrawBotRenderer:
     def stroke(self, isStroke, color, lineWidth):
         if not isStroke:
             return
+
+        if type(color) is str and color.startswith('#'):
+            color = hexToRGB(color)
+
         ctx.strokeWidth(lineWidth)
         ctx.stroke(*color)
 
@@ -51,6 +56,10 @@ class DrawBotRenderer:
         if not isFill:
             ctx.fill(None)
             return
+
+        if type(color) is str and color.startswith('#'):
+            color = hexToRGB(color)
+
         ctx.fill(*color)
 
     def end(self):

@@ -8,10 +8,10 @@ reload(zDogPy.shape)
 import zDogPy.rect
 reload(zDogPy.rect)
 
+from zDogPy.boilerplate import hexToRGB, TAU
 from zDogPy.anchor import Anchor
 from zDogPy.shape import Shape
 from zDogPy.rect import Rect
-from zDogPy.boilerplate import TAU
 
 # -------
 # BoxRect
@@ -101,23 +101,21 @@ class Box(Anchor):
             # self.removeChild(rectProperty)
             return
 
-        rect = BoxRect(**options)
-        # rect.setOptions(options)
+        if isinstance(attr, tuple):
+            color = attr
+        elif type(attr) is str:
+            color = hexToRGB(attr)
+        else:
+            color = self.color
 
-        # color: typeof property == 'string' ? property : this.color,
+        rect = BoxRect(**options)
         rect.stroke = self.stroke
         rect.fill   = self.fill
-        rect.color  = self.color
+        rect.color  = color
+
         # rect.backface   = self.backface
         # rect.front      = self.front
         # rect.visible    = self.visible
-
-        # # rect.color    = self.color,
-        # # rect.stroke   = self.stroke
-        # # rect.fill     = self.fill
-        # # rect.backface = self.backface
-        # # rect.front    = self.front
-        # # rect.visible  = self.visible
 
         rect.updatePath()
         self.addChild(rect)

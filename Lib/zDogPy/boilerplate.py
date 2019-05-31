@@ -35,3 +35,27 @@ def lerp(a, b, t):
 #     curve = powerMultiplier(slope)
 #     curve = curve / 2
 #     return isFirstHalf if curve else 1 - curve
+
+# -----------
+# hex <-> rgb
+# -----------
+
+def hexToRGB(hexColor):
+    hexColor = hexColor.lstrip('#')
+    if len(hexColor) == 3:
+        hexColor = ''.join([c*2 for c in hexColor])
+    L = len(hexColor)
+    rgb = []
+    for i in range(0, L, L // 3):
+        rgb += (int(hexColor[i:i + L // 3], 16) / 255,)
+    return rgb
+
+def RGBToHex(rgbColor):
+    r, g, b = rgbColor
+    r, g, b = int(r*255), int(g*255), int(b*255)
+    return '%02x%02x%02x' % (r, g, b)
+
+if __name__ == '__main__':
+
+    print(hexToRGB('#F30'))
+    print(hexToRGB('#FF3300'))

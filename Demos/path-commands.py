@@ -8,13 +8,15 @@ from zDogPy.boilerplate import TAU
 from zDogPy.illustration import Illustration
 from zDogPy.shape import Shape
 
-illo = Illustration()
-illo.centered = True
-illo.setSize(40, 40)
+eggplant = '#636'
+
+I = Illustration()
+I.color = '#FDB'
+I.centered = True
+I.setSize(60, 60)
 
 # lines
-S1 = Shape(
-    addTo=illo,
+S1 = Shape(addTo=I,
     path=[
         { 'x': -6, 'y': -6 },
         { 'x':  6, 'y': -6 },
@@ -22,50 +24,43 @@ S1 = Shape(
         { 'x': -6, 'y':  6 },
     ],
     translate={ 'x': -12, 'y': -12 },
-    # rotate={ 'x': TAU / 4 },
-    scale={ 'x': 2, 'y': 1 },
-    closed=True,
-    color=(1, 0, 1),
-    stroke=3)
+    closed=False,
+    color=eggplant,
+    stroke=2)
 
-
-
-# # move
-# S2 = Shape(
-#     addTo=illo,
-#     path=[
-#         { 'x': -6, 'y': -6 },
-#         { 'x':  6, 'y': -6 },
-#         { 'move': { 'x': -6, 'y':  6 } },
-#         { 'x':  6, 'y':  6 },
-#     ],
-#     translate={ 'x': 12, 'y': -12 },
-#     closed=False,
-#     color=(0, 1, 0),
-#     stroke=3)
+# move
+S2 = Shape(addTo=I,
+    path=[
+        { 'x': -6, 'y': -6 },
+        { 'x':  6, 'y': -6 },
+        { 'move': { 'x': -6, 'y':  6 } },
+        { 'x':  6, 'y':  6 },
+    ],
+    translate={ 'x': 12, 'y': -12 },
+    closed=False,
+    color=eggplant,
+    stroke=2)
 
 # arc
-# S3 = Shape(
-#     addTo=illo,
-#     path=[
-#         { 'x': -6, 'y': -6 }, # start
-#         { 'arc': [
-#             { 'x':  2, 'y': -6 }, # corner
-#             { 'x':  2, 'y':  2 }, # end point
-#         ]},
-#         { 'arc': [ # start next arc from last end point
-#             { 'x':  2, 'y':  6 }, # corner
-#             { 'x':  6, 'y':  6 }, # end point
-#         ]},
-#     ],
-#     translate={ 'x': -12, 'y': 12 },
-#     closed=False,
-#     color=(0, 0, 1),
-#     stroke=2)
+S3 = Shape(addTo=I,
+    path=[
+        { 'x': -6, 'y': -6 }, # start
+        { 'arc': [
+            { 'x':  2, 'y': -6 }, # corner
+            { 'x':  2, 'y':  2 }, # end point
+        ]},
+        { 'arc': [ # start next arc from last end point
+            { 'x':  2, 'y':  6 }, # corner
+            { 'x':  6, 'y':  6 }, # end point
+        ]},
+    ],
+    translate={ 'x': -12, 'y': 12 },
+    closed=False,
+    color=eggplant,
+    stroke=2)
 
 # bezier
-S4 = Shape(
-    addTo=illo,
+S4 = Shape(addTo=I,
     path=[
         { 'x': -6, 'y': -6 }, # start
         { 'bezier': [
@@ -76,19 +71,8 @@ S4 = Shape(
     ],
     translate={ 'x': 12, 'y': 12 },
     closed=False,
-    color=(0, 1, 0),
+    color=eggplant,
     stroke=2)
 
-# animate
-
-Variable([
-    dict(name="rotateX", ui="Slider", args=dict(value=0, minValue=0, maxValue=2*pi)),
-    dict(name="rotateY", ui="Slider", args=dict(value=0, minValue=0, maxValue=2*pi)),
-    dict(name="rotateZ", ui="Slider", args=dict(value=0, minValue=0, maxValue=2*pi)),
-], globals())
-
-illo.rotate.x = rotateX
-illo.rotate.y = rotateY
-illo.rotate.z = rotateZ
-
-illo.updateRenderGraph()
+I.showInterface()
+I.updateRenderGraph()

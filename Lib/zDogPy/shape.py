@@ -24,6 +24,8 @@ class Shape(Anchor):
       'arc',
     ]
 
+    pathCommands = []
+
     def __init__(self, stroke=1, fill=False, color=(0, 1, 0), closed=True, visible=True, path=[], front=dict(z=1), backface=True, **kwargs):
         Anchor.__init__(self, **kwargs)
 
@@ -117,6 +119,8 @@ class Shape(Anchor):
             child.transform(translation, rotation, scale)
 
     def updateSortValue(self):
+        if not len(self.pathCommands):
+            return
         sortValueTotal = 0
         for command in self.pathCommands:
             sortValueTotal += command.endRenderPoint.z
@@ -187,7 +191,11 @@ class Shape(Anchor):
         renderer.end()
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
 
-    S = Shape()
-    print(S)
+#     S = Shape()
+#     print(S)
+
+#     S2 = S.copy()
+#     print(S2)
+

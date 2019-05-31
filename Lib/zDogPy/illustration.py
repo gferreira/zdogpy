@@ -7,7 +7,7 @@ import zDogPy.anchor
 reload(zDogPy.anchor)
 
 import drawBot as ctx
-from zDogPy.boilerplate import TAU
+from zDogPy.boilerplate import TAU, hexToRGB
 from zDogPy.anchor import Anchor
 
 class Illustration(Anchor):
@@ -17,6 +17,9 @@ class Illustration(Anchor):
     pixelRatio = 1
 
     width = height = 1000
+
+    blendMode = 'normal'
+    color = None
 
     def __init__(self, **kwargs):
         Anchor.__init__(self, **kwargs)
@@ -65,6 +68,12 @@ class Illustration(Anchor):
     def prerenderDrawBot(self):
 
         ctx.newPage(self.width, self.height)
+        if self.color is not None:
+            color = hexToRGB(self.color) if type(self.color) is str and self.color.startswith('#') else self.color
+            ctx.fill(*color)
+            ctx.rect(0, 0, self.width, self.height)
+
+        ctx.blendMode(self.blendMode)
         ctx.lineCap('round')
         ctx.lineJoin('round')
         ctx.save()
@@ -79,3 +88,15 @@ class Illustration(Anchor):
 
     def postrenderDrawBot(self):
         ctx.restore()
+
+    def showInterface(self):
+
+        ctx.Variable([
+            dict(name="rotateX", ui="Slider", args=dict(value=0, minValue=0, maxValue=TAU)),
+            dict(name="rotateY", ui="Slider", args=dict(value=0, minValue=0, maxValue=TAU)),
+            dict(name="rotateZ", ui="Slider", args=dict(value=0, minValue=0, maxValue=TAU)),
+        ], globals())
+
+        self.rotate.x = rotateX
+        self.rotate.y = rotateY
+        self.rotate.z = rotateZ
