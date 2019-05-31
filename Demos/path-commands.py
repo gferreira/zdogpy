@@ -4,10 +4,9 @@ reload(zDogPy.illustration)
 import zDogPy.shape
 reload(zDogPy.shape)
 
+from zDogPy.boilerplate import TAU
 from zDogPy.illustration import Illustration
 from zDogPy.shape import Shape
-
-# eggplant = 1, 1, 0.5
 
 illo = Illustration()
 illo.centered = True
@@ -23,23 +22,27 @@ S1 = Shape(
         { 'x': -6, 'y':  6 },
     ],
     translate={ 'x': -12, 'y': -12 },
+    # rotate={ 'x': TAU / 4 },
+    scale={ 'x': 2, 'y': 1 },
     closed=True,
-    color=(1, 0, 0),
-    stroke=2)
-
-# move
-S2 = Shape(
-    addTo=illo,
-    path=[
-        { 'x': -6, 'y': -6 },
-        { 'x':  6, 'y': -6 },
-        { 'move': { 'x': -6, 'y':  6 } },
-        { 'x':  6, 'y':  6 },
-    ],
-    translate={ 'x': 12, 'y': -12 },
-    closed=False,
-    color=(0, 1, 0),
+    color=(1, 0, 1),
     stroke=3)
+
+
+
+# # move
+# S2 = Shape(
+#     addTo=illo,
+#     path=[
+#         { 'x': -6, 'y': -6 },
+#         { 'x':  6, 'y': -6 },
+#         { 'move': { 'x': -6, 'y':  6 } },
+#         { 'x':  6, 'y':  6 },
+#     ],
+#     translate={ 'x': 12, 'y': -12 },
+#     closed=False,
+#     color=(0, 1, 0),
+#     stroke=3)
 
 # arc
 # S3 = Shape(
@@ -73,7 +76,7 @@ S4 = Shape(
     ],
     translate={ 'x': 12, 'y': 12 },
     closed=False,
-    color=(1, 0, 1),
+    color=(0, 1, 0),
     stroke=2)
 
 # animate

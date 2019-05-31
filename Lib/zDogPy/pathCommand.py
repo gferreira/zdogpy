@@ -18,11 +18,12 @@ def mapNewVector(point):
 class PathCommand:
 
     def __init__(self, method, points, previousPoint):
-        self.method = method
-        self.points = [mapVectorPoint(point) for point in points]
-        self.renderPoints = [mapNewVector(point) for point in points]
-        self.previousPoint = previousPoint
-        self.endRenderPoint = self.renderPoints[len(self.renderPoints) - 1]
+
+        self.method         = method
+        self.points         = [mapVectorPoint(point) for point in points]
+        self.renderPoints   = [mapNewVector(point) for point in points]
+        self.previousPoint  = previousPoint
+
         # arc actions come with previous point & corner point
         # but require bezier control points
         if method == 'arc':
@@ -30,6 +31,10 @@ class PathCommand:
 
     def __repr__(self):
         return f'<zDog PathCommand {self.method}>'
+
+    @property
+    def endRenderPoint(self):
+        return self.renderPoints[-1]
 
     def reset(self):
         # reset renderPoints back to original points position
@@ -39,18 +44,23 @@ class PathCommand:
             renderPoint.set(point)
 
     def transform(self, translation, rotation, scale):
-        # print(translation, rotation, scale)
-        # print(self.renderPoints)
+
         renderPoints = []
         for renderPoint in self.renderPoints:
-            # print(renderPoint)
             pt = renderPoint.copy()
             pt.transform(translation, rotation, scale)
-            # print(pt)
             renderPoints.append(pt)
         self.renderPoints = renderPoints
-        # print(renderPoints)
-        print()
+
+        if self.method == 'arc':
+            controlPoints = []
+            for controlPoint in self.controlPoints:
+                pt = controlPoint.copy()
+                pt.transform(translation, rotation, scale)
+                controlPoints.append(pt)
+            self.controlPoints = controlPoints
+
+            self.previousPoint.transform(translation, rotation, scale)
 
     def render(self, ctx, renderer):
         cmd = getattr(self, self.method)
@@ -69,11 +79,18 @@ class PathCommand:
         return renderer.bezier(cp0, cp1, end)
 
     def arc(self, ctx, renderer):
+        c = 9 / 16 # 0.55191502449
+
         prev   = self.previousPoint
         corner = self.renderPoints[0]
-        end = self.renderPoints[1]
+        end    = self.renderPoints[1]
+
         cp0 = self.controlPoints[0]
         cp1 = self.controlPoints[1]
-        cp0.set(prev).lerp(corner, 9/16)
-        cp1.set(end).lerp(corner, 9/16)
+
+        cp0.set(prev).lerp(corner, c)
+        cp1.set(end).lerp(corner, c)
+
         return renderer.bezier(cp0, cp1, end)
+
+

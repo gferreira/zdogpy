@@ -3,34 +3,64 @@
 from importlib import reload
 import zDogPy.boilerplate
 reload(zDogPy.boilerplate)
+import zDogPy.shape
+reload(zDogPy.shape)
 import zDogPy.vector
 reload(zDogPy.vector)
 import zDogPy.drawBotRenderer
 reload(zDogPy.drawBotRenderer)
 
+from functools import cmp_to_key
 import drawBot as ctx
+from zDogPy.shape import Shape
 from zDogPy.vector import Vector
 from zDogPy.boilerplate import TAU, extend
 from zDogPy.drawBotRenderer import DrawBotRenderer
 
-onePoint = { 'x' : 1, 'y' : 1, 'z' : 1 }
+# onePoint = { 'x' : 1, 'y' : 1, 'z' : 1 }
+
+def shapeSorter(a, b):
+    return a.sortValue - b.sortValue
 
 class Anchor(Vector):
 
     def __init__(self, rotate=None, translate=None, scale=None, addTo=None, **kwargs):
 
-        # set defaults & options
-        # self.defaults = {}
         self.addTo = addTo
         self.flatGraph = []
+        self.sortValue = 0
 
         # transform
-        self.translate = Vector(**translate) if translate else Vector()
-        self.rotate    = Vector(**rotate) if rotate else Vector()
-        self.scale     = Vector(**scale) if scale else Vector()
+
+        if translate is None:
+            self.translate = Vector()
+        elif isinstance(translate, Vector):
+            self.translate = translate
+        elif isinstance(translate, dict):
+            self.translate = Vector(**translate)
+        elif isinstance(translate, float) or isinstance(translate, int):
+            self.translate = Vector(translate)
+
+        if rotate is None:
+            self.rotate = Vector()
+        elif isinstance(translate, Vector):
+            self.rotate = Vector(**rotate)
+        elif isinstance(rotate, dict):
+            self.rotate = Vector(**rotate)
+        elif isinstance(rotate, float) or isinstance(rotate, int):
+            self.rotate = Vector(rotate)
+
+        if scale is None:
+            self.scale = Vector()
+        elif isinstance(translate, Vector):
+            self.scale = Vector(**scale)
+        elif isinstance(scale, dict):
+            self.scale = Vector(**scale)
+        elif isinstance(scale, float) or isinstance(scale, int):
+            self.scale = Vector(scale)
 
         # origin
-        self.origin       = Vector()
+        self.origin = Vector()
         self.renderOrigin = Vector()
 
         # children
@@ -39,19 +69,21 @@ class Anchor(Vector):
             self.addTo.addChild(self)
 
     def __repr__(self):
-        return '<zDog Anchor>'
+        return f'<zDog Anchor {self.x} {self.y} {self.z}>'
 
-    def setOptions(self, **kwargs):
-        if not kwargs:
+    def setOptions(self, options):
+        if not options:
             return
-        for key, value in kwargs.items():
+        for key, value in options.items():
             if hasattr(self, key):
                 setattr(self, key, value)
 
     def addChild(self, shape):
         if shape in self.children:
-            shape.remove() # remove previous parent
-        shape.addTo = self # keep parent reference
+            # remove previous parent
+            shape.remove()
+        # keep parent reference
+        shape.addTo = self
         self.children.append(shape)
 
     def removeChild(self, shape):
@@ -78,11 +110,9 @@ class Anchor(Vector):
         self.renderOrigin.set(self.origin)
 
     def transform(self, translation, rotation, scale):
-
         self.renderOrigin.transform(translation, rotation, scale)
-
         # transform children
-        for child in self.children:
+        for i, child in enumerate(self.children):
             child.transform(translation, rotation, scale)
 
     def updateGraph(self):
@@ -91,9 +121,7 @@ class Anchor(Vector):
         for item in self.flatGraph:
             item.updateSortValue()
         # z-sort
-        # def shapeSorter(a, b):
-        #     return a.sortValue - b.sortValue
-        # self.flatGraph.sort() # shapeSorter
+        self.flatGraph.sort(key=cmp_to_key(shapeSorter))
 
     def checkFlatGraph(self):
         if not self.flatGraph:
@@ -103,7 +131,7 @@ class Anchor(Vector):
         self.flatGraph = self.getFlatGraph()
 
     def getFlatGraph(self):
-        # return Array of self & all child graph items
+        # return list of self & all child graph items
         flatGraph = [self]
         for child in self.children:
             childFlatGraph = child.getFlatGraph()
@@ -118,7 +146,6 @@ class Anchor(Vector):
     # ------
 
     def render(self, ctx, renderer):
-        # print(f'rendering {self}...')
         pass
 
     def renderGraphDrawBot(self):
@@ -131,16 +158,7 @@ class Anchor(Vector):
     # ----
 
     # def copy(self):
-    #     a = Anchor()
-    #     a.addTo        = self.addTo
-    #     a.flatGraph    = self.flatGraph
-    #     a.translate    = self.translate
-    #     a.rotate       = self.rotate
-    #     a.scale        = self.scale
-    #     a.origin       = self.origin
-    #     a.renderOrigin = self.renderOrigin
-    #     a.children     = self.children
-    #     return a
+    #     pass
 
     def copyGraph(self, options):
         # clone = self.copy(options)
@@ -158,15 +176,16 @@ class Anchor(Vector):
     # subclass
     # --------
 
-    def getSubclass(self):
-        # ???
-        pass
+    # def getSubclass(self):
+    #     pass
 
 
 if __name__ == '__main__':
 
-    A = Anchor()
-    print(A.renderOrigin.translate, A.renderOrigin.rotate, A.renderOrigin.scale)
-    A.transform(Vector(10), Vector(), Vector())
-    print(A.renderOrigin.translate, A.renderOrigin.rotate, A.renderOrigin.scale)
+    A = Anchor(translate=dict(y=10))
+    print(A, A.renderOrigin)
+    # print()
+
+    A.transform(Vector(10), Vector(TAU/4), Vector(2))
+    # print(A, A.renderOrigin)
 

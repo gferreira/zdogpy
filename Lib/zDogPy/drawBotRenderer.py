@@ -34,7 +34,7 @@ class DrawBotRenderer:
 
         self.begin()
         for command in pathCommands:
-            command.render(ctx, self) # ???
+            command.render(ctx, self)
 
         if isClosed:
             self.closePath()

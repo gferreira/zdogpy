@@ -13,17 +13,8 @@ from zDogPy.anchor import Anchor
 class Illustration(Anchor):
 
     element    = None
-    centered   = False
+    centered   = True
     pixelRatio = 1
-
-    # zoom        = 1
-    # dragRotate  = False
-    # resize      = False
-    # onPrerender = None # noop # ???
-    # onDragStart = None # noop # ???
-    # onDragMove  = None # noop # ???
-    # onDragEnd   = None # noop # ???
-    # onResize    = None # noop # ???
 
     width = height = 1000
 
@@ -56,6 +47,9 @@ class Illustration(Anchor):
     # -------
     # DrawBot
     # -------
+
+    # def render(self, ctx, renderer):
+    #     pass
 
     def setSize(self, width, height):
         self.width  = width  * self.pixelRatio

@@ -17,14 +17,13 @@ class Ellipse(Shape):
         Shape.__init__(self, **kwargs)
 
     def __repr__(self):
-        return f'<zDog Ellipse>'
+        return '<zDog Ellipse>'
 
     def setPath(self):
-        width  = self.width  if self.width   else self.diameter
-        height = self.height if self.height  else self.diameter
+        width  = self.width  if self.width  else self.diameter
+        height = self.height if self.height else self.diameter
         x = width  / 2
         y = height / 2
-
         self.path = [
             { 'x': 0, 'y': -y },
             { 'arc': [

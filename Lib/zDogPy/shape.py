@@ -24,7 +24,7 @@ class Shape(Anchor):
       'arc',
     ]
 
-    def __init__(self, stroke=1, fill=False, color='#333', closed=True, visible=True, path=[{}], front=dict(z=1), backface=True, **kwargs):
+    def __init__(self, stroke=1, fill=False, color=(0, 1, 0), closed=True, visible=True, path=[], front=dict(z=1), backface=True, **kwargs):
         Anchor.__init__(self, **kwargs)
 
         self.stroke   = stroke
@@ -56,6 +56,9 @@ class Shape(Anchor):
 
         previousPoint = None
 
+        if not self.path:
+            return
+
         self.pathCommands = []
 
         for i, pathPart in enumerate(self.path):
@@ -82,7 +85,6 @@ class Shape(Anchor):
             if i == 0:
                 method = 'move'
             # arcs require previous last point
-            # print(method, points, previousPoint)
             command = PathCommand(method, points, previousPoint)
             # update previousLastPoint
             previousPoint = command.endRenderPoint
@@ -101,7 +103,6 @@ class Shape(Anchor):
             command.reset()
 
     def transform(self, translation, rotation, scale):
-
         # calculate render points backface visibility & cone/hemisphere shapes
         self.renderOrigin.transform(translation, rotation, scale)
         self.renderFront.transform(translation, rotation, scale)
@@ -133,14 +134,10 @@ class Shape(Anchor):
         if not self.visible or not length:
             return
 
-        # TODO: make this work
-
         # do not render if hiding backface
         # self.isFacingBack = self.renderNormal.z > 0
         # if not (self.backface and self.isFacingBack):
         #     return
-
-        # print(f'rendering {self}...')
 
         if not renderer:
             print(f'Zdog renderer required. Set to {renderer}')
@@ -152,18 +149,18 @@ class Shape(Anchor):
         # else:
         self.renderPath(ctx, renderer)
 
-    # def renderDrawBotDot(self, ctx):
-    #     # render lines with no size as circle
-    #     lineWidth = self.getLineWidth()
-    #     if not lineWidth:
-    #         return
+    def renderDrawBotDot(self, ctx):
+        # render lines with no size as circle
+        lineWidth = self.getLineWidth()
+        if not lineWidth:
+            return
 
-    #     color  = self.getRenderColor()
-    #     point  = self.pathCommands[0].endRenderPoint
-    #     radius = lineWidth / 2
+        color  = self.getRenderColor()
+        point  = self.pathCommands[0].endRenderPoint
+        radius = lineWidth / 2
 
-    #     ctx.fill(*color)
-    #     ctx.oval(point.x - radius, point.y - radius, radius * 2, radius * 2)
+        ctx.fill(*color)
+        ctx.oval(point.x - radius, point.y - radius, radius * 2, radius * 2)
 
     def getLineWidth(self):
         if not self.stroke:
@@ -194,4 +191,3 @@ if __name__ == '__main__':
 
     S = Shape()
     print(S)
-

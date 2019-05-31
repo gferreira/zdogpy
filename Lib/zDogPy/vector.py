@@ -6,7 +6,6 @@ reload(zDogPy.boilerplate)
 
 import math
 from zDogPy.boilerplate import TAU, lerp
-
 class Vector:
 
     x = 0
@@ -55,30 +54,35 @@ class Vector:
             self.z = z
         return self
 
-    def scale(self, scale):
-        if not scale:
-            return
-        result = self.multiply(scale)
-        self.x = result.x
-        self.y = result.y
-        self.z = result.z
-        return self
+    # def scale(self, scale):
+    #     if not scale:
+    #         return
+    #     result = self.multiply(scale)
+    #     self.x = result.x
+    #     self.y = result.y
+    #     self.z = result.z
+    #     return self
 
-    def translate(self, translation):
-        if not translation:
-            return
-        result = self.add(translation)
-        self.x = result.x
-        self.y = result.y
-        self.z = result.z
-        return self
+    # def translate(self, translation):
+    #     if not translation:
+    #         return
+    #     result = self.add(translation)
+    #     self.x = result.x
+    #     self.y = result.y
+    #     self.z = result.z
+    #     return self
 
     def rotate(self, rotation):
-        if not rotation:
+        if rotation is None:
             return
+
+        if isinstance(rotation, dict):
+            rotation = Vector(**rotation)
+
         self.rotateZ(rotation.z)
         self.rotateY(rotation.y)
         self.rotateX(rotation.x)
+
         return self
 
     def rotateZ(self, angle):
@@ -101,18 +105,32 @@ class Vector:
         setattr(vec, propB, b * cos + a * sin)
 
     def add(self, pos):
-        if not pos:
-            return # self
 
-        # result = self.copy()
-        self.x += pos.x if isinstance(pos, Vector) else 0
-        self.y += pos.y if isinstance(pos, Vector) else 0
-        self.z += pos.z if isinstance(pos, Vector) else 0
+        if pos is None:
+            return
 
-        # return result
+        if hasattr(pos, 'x'):
+            self.x += pos.x
+        else:
+            # self.x += pos
+            pass
+
+        if hasattr(pos, 'y'):
+            self.y += pos.y
+        else:
+            # self.y += pos
+            pass
+
+        if hasattr(pos, 'z'):
+            self.z += pos.z
+        else:
+            # self.z += pos
+            pass
+
+        return self
 
     def subtract(self, pos):
-        if not pos:
+        if pos is None:
             return # self
 
         # result = self.copy()
@@ -120,42 +138,35 @@ class Vector:
         self.y -= pos.y if isinstance(pos, Vector) else 0
         self.z -= pos.z if isinstance(pos, Vector) else 0
 
-        # return result
+        return self
 
     def multiply(self, pos):
 
         if pos is None:
             return
 
-        # print(self)
+        if isinstance(pos, Vector):
+            self.x *= pos.x
+            self.y *= pos.y
+            self.z *= pos.z
 
-        # result = self.copy()
-
-        # multiply all values by same number
-        if type(pos) in [float, int]:
+        elif isinstance(pos, float) or isinstance(pos, int):
             self.x *= pos
             self.y *= pos
             self.z *= pos
 
-        # multiply object
         else:
-            # print(pos)
-            self.x *= pos.x if isinstance(pos, Vector) else 1
-            self.y *= pos.y if isinstance(pos, Vector) else 1
-            self.z *= pos.z if isinstance(pos, Vector) else 1
+            self.x *= 1
+            self.y *= 1
+            self.z *= 1
 
-        # print(self)
-
-        # return result
+        return self
 
     def transform(self, translation, rotation, scale):
-        # print(translation, rotation, scale)
-        print(self)
         self.multiply(scale)
         self.rotate(rotation)
         self.add(translation)
-        print(self)
-
+        return self
 
     def lerp(self, pos, t):
         self.x = lerp(self.x, pos.x or 0, t)
@@ -184,41 +195,46 @@ class Vector:
 if __name__ == '__main__':
 
     v1 = Vector()
-    # print('v1:', v1)
+    print('v1:', v1)
 
     v2 = Vector(10)
-    # print('v2:', v2)
+    print('v2:', v2)
 
-    v1.add(v2)
-    # print('v1:', v1)
-
-    v3 = Vector()
+    v3 = v2.copy()
     v3.add(v2)
+    print('v3:', v3)
+    print('v1:', v1)
+    print('v2:', v2)
+    print()
+
+    # v3 = Vector()
+    # v3.add(v2)
     # print('v3:', v3)
 
     v4 = Vector(y=30, z=20)
-    # print('v4:', v4)
+    print('v4:', v4)
 
     v5 = v4.copy()
     v5.multiply(2)
+    print('v5:', v5)
 
-    v8 = v2.copy()
-    # print('v8:', v8)
-    v8.transform(Vector(x=10), Vector(), Vector(3))
-    # v8.rotate(Vector(x=10, y=0, z=0))
-    # print('v8:', v8)
-    # print('v2:', v2)
+#     v8 = v2.copy()
+#     # print('v8:', v8)
+#     v8.transform(Vector(x=10), Vector(), Vector(3))
+#     # v8.rotate(Vector(x=10, y=0, z=0))
+#     # print('v8:', v8)
+#     # print('v2:', v2)
 
-    translation = Vector(x=10)
-    rotation    = Vector()
-    scale       = Vector(3)
-    print(translation, rotation, scale)
+#     translation = Vector(x=10)
+#     rotation    = Vector()
+#     scale       = Vector(3)
+#     print(translation, rotation, scale)
 
-    v9 = Vector(x=10, y=20, z=0)
-    print(v9)
-    # # print(translation)
-    # # print(v9.add(translation))
-    v9.transform(translation, rotation, scale)
-    # # print()
-    print(v9)
-#
+#     v9 = Vector(x=10, y=20, z=0)
+#     print(v9)
+#     # # print(translation)
+#     # # print(v9.add(translation))
+#     v9.transform(translation, rotation, scale)
+#     # # print()
+#     print(v9)
+# #
