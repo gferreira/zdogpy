@@ -44,6 +44,7 @@ class DrawBotRenderer:
 
     def stroke(self, isStroke, color, lineWidth, lineCap='round', lineJoin='round'):
         if not isStroke:
+            ctx.stroke(None)
             return
 
         if type(color) is str and color.startswith('#'):

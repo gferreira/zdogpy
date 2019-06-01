@@ -1,88 +1,56 @@
-// ----- setup ----- //
+from importlib import reload
+import zDogPy.illustration
+reload(zDogPy.illustration)
+import zDogPy.boilerplate
+reload(zDogPy.boilerplate)
+import zDogPy.anchor
+reload(zDogPy.anchor)
+import zDogPy.vector
+reload(zDogPy.vector)
+import zDogPy.shape
+reload(zDogPy.shape)
 
-var sceneSize = 24;
-var TAU = Zdog.TAU;
+from zDogPy.boilerplate import TAU
+from zDogPy.anchor import Anchor
+from zDogPy.vector import Vector
+from zDogPy.shape import Shape
+from zDogPy.illustration import Illustration
 
-var illo = new Zdog.Illustration({
-  element: '.illo',
-  rotate: { x: TAU * -35/360, y: TAU * 1/8 },
-  dragRotate: true,
-  resize: 'fullscreen',
-  onResize: function( width, height ) {
-    this.zoom = Math.floor( Math.min( width, height ) / sceneSize );
-  },
-});
+I = Illustration()
+I.setSize(24, 24)
 
-// ----- model ----- //
+D = 5
+S = 3
 
-var cube = new Zdog.Anchor({
-  addTo: illo,
-  scale: 4,
-});
+origin = Anchor(addTo=I, scale=3)
+dotOptions = dict(addTo=origin, stroke=S, color=(1, 0, 0, 0.5))
 
-var oneUnit = new Zdog.Vector({ x: 1, y: 1 });
+# Shape(translate={ 'x':  0, 'y' :  0, 'z':  0 }, **dotOptions)
 
-var side = new Zdog.Anchor({
-  addTo: cube,
-  translate: { z: 1 },
-});
+Shape(translate={ 'x':  D, 'y' :  D, 'z':  D }, **dotOptions)
+Shape(translate={ 'x': -D, 'y' :  D, 'z':  D }, **dotOptions)
+Shape(translate={ 'x':  D, 'y' : -D, 'z':  D }, **dotOptions)
+Shape(translate={ 'x': -D, 'y' : -D, 'z':  D }, **dotOptions)
 
-var dot = new Zdog.Shape({
-  addTo: side,
-  translate: oneUnit.copy(),
-  stroke: 1,
-  color: 'white',
-});
+Shape(translate={ 'x':  0, 'y' :  D, 'z':  D }, **dotOptions)
+Shape(translate={ 'x':  0, 'y' : -D, 'z':  D }, **dotOptions)
+Shape(translate={ 'x':  0, 'y' :  D, 'z': -D }, **dotOptions)
+Shape(translate={ 'x':  0, 'y' : -D, 'z': -D }, **dotOptions)
 
-dot.copy({ translate: { x: -1, y:  1 } });
-dot.copy({ translate: { x:  1, y: -1 } });
-dot.copy({ translate: { x: -1, y: -1 } });
+Shape(translate={ 'x':  D, 'y' :  D, 'z': -D }, **dotOptions)
+Shape(translate={ 'x': -D, 'y' :  D, 'z': -D }, **dotOptions)
+Shape(translate={ 'x':  D, 'y' : -D, 'z': -D }, **dotOptions)
+Shape(translate={ 'x': -D, 'y' : -D, 'z': -D }, **dotOptions)
 
-// more dots
-dot.copy({ translate: { x:  1 } });
-dot.copy({ translate: { x: -1 } });
-dot.copy({ translate: { y: -1 } });
-dot.copy({ translate: { y:  1 } });
+Shape(translate={ 'x':  D, 'y' :  0, 'z': -D }, **dotOptions)
+Shape(translate={ 'x': -D, 'y' :  0, 'z': -D }, **dotOptions)
+Shape(translate={ 'x':  D, 'y' :  0, 'z':  D }, **dotOptions)
+Shape(translate={ 'x': -D, 'y' :  0, 'z':  D }, **dotOptions)
 
-side.copyGraph({
-  translate: { z: -1 },
-});
+Shape(translate={ 'x':  D, 'y' :  D, 'z':  0 }, **dotOptions)
+Shape(translate={ 'x': -D, 'y' :  D, 'z':  0 }, **dotOptions)
+Shape(translate={ 'x':  D, 'y' : -D, 'z':  0 }, **dotOptions)
+Shape(translate={ 'x': -D, 'y' : -D, 'z':  0 }, **dotOptions)
 
-var midDot = dot.copy({
-  addTo: cube,
-});
-
-midDot.copy({ translate: { x: -1, y:  1 }} );
-midDot.copy({ translate: { x:  1, y: -1 }} );
-midDot.copy({ translate: { x: -1, y: -1 }} );
-
-
-// ----- animate ----- //
-
-var keyframes = [
-  { x: 0, y: 0, z: 0 },
-  { x: 0, y: 0, z: TAU/4 },
-  { x: -TAU/4, y: 0, z: TAU/4 },
-  { x: -TAU/4, y: 0, z: TAU/2 },
-];
-
-var ticker = 0;
-var cycleCount = 75;
-var turnLimit = keyframes.length - 1;
-
-function animate() {
-  var progress = ticker / cycleCount;
-  var tween = Zdog.easeInOut( progress % 1, 4 );
-  var turn = Math.floor( progress % turnLimit );
-  var keyA = keyframes[ turn ];
-  var keyB = keyframes[ turn + 1 ];
-  cube.rotate.x = Zdog.lerp( keyA.x, keyB.x, tween );
-  cube.rotate.y = Zdog.lerp( keyA.y, keyB.y, tween );
-  cube.rotate.z = Zdog.lerp( keyA.z, keyB.z, tween );
-  ticker++;
-
-  illo.updateRenderGraph();
-  requestAnimationFrame( animate );
-}
-
-animate();
+I.showInterface()
+I.updateRenderGraph()

@@ -15,13 +15,13 @@ gold   = '#EA0'
 garnet = '#C25'
 
 C = Cylinder(addTo=I,
-    diameter=5,
-    length=30,
+    diameter=10,
+    length=40,
     translate={ 'x': 4, 'y': -4 },
     rotate={ 'x': TAU/4 },
     color=gold,
     backface=garnet,
-    stroke=10)
+    stroke=3)
 
 I.showInterface()
 I.updateRenderGraph()

@@ -132,6 +132,23 @@ class Shape(Anchor):
     # render
     # ------
 
+    def getLineWidth(self):
+        if not self.stroke:
+            return 0
+        if self.stroke == True:
+            return 1
+        return self.stroke
+
+    def getRenderColor(self):
+        # use backface color if applicable
+        isBackfaceColor = isinstance(self.backface, str) and self.isFacingBack
+        color = self.backface if isBackfaceColor else self.color
+
+        if type(color) is str:
+            color = hexToRGB(color)
+
+        return color
+
     def render(self, ctx, renderer):
 
         length = len(self.pathCommands)
@@ -140,8 +157,8 @@ class Shape(Anchor):
 
         # do not render if hiding backface
         self.isFacingBack = self.renderNormal.z > 0
-        # if not (self.backface and self.isFacingBack):
-        #     return
+        if not self.backface and not self.isFacingBack:
+            return
 
         if not renderer:
             print(f'Zdog renderer required. Set to {renderer}')
@@ -149,11 +166,11 @@ class Shape(Anchor):
         # render dot or path
         isDot = length == 1
         if isDot:
-            self.renderDrawBotDot(ctx, renderer)
+            self.renderDot(ctx, renderer)
         else:
             self.renderPath(ctx, renderer)
 
-    def renderDrawBotDot(self, ctx, renderer):
+    def renderDot(self, ctx, renderer):
 
         # render lines with no size as circle
         lineWidth = self.getLineWidth()
@@ -164,26 +181,9 @@ class Shape(Anchor):
         point  = self.pathCommands[0].endRenderPoint
         radius = lineWidth / 2
 
-        ctx.fill(*color)
+        renderer.stroke(False, color, self.getLineWidth())
+        renderer.fill(True, color)
         ctx.oval(point.x - radius, point.y - radius, radius * 2, radius * 2)
-
-    def getLineWidth(self):
-        if not self.stroke:
-            return 0
-        if self.stroke == True:
-            return 1
-        return self.stroke
-
-    def getRenderColor(self):
-
-        # use backface color if applicable
-        isBackfaceColor = isinstance(self.backface, str) and self.isFacingBack
-        color = self.backface if isBackfaceColor else self.color
-
-        if type(color) is str:
-            color = hexToRGB(color)
-
-        return color
 
     def renderPath(self, ctx, renderer):
 
@@ -195,13 +195,3 @@ class Shape(Anchor):
         renderer.fill(self.fill, color)
         renderer.renderPath(self.pathCommands, isClosed)
         renderer.end()
-
-
-# if __name__ == '__main__':
-
-#     S = Shape()
-#     print(S)
-
-#     S2 = S.copy()
-#     print(S2)
-
