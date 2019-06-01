@@ -12,9 +12,9 @@ reload(zDogPy.drawBotRenderer)
 
 from functools import cmp_to_key
 import drawBot as ctx
-from zDogPy.shape import Shape
+# from zDogPy.shape import Shape
 from zDogPy.vector import Vector
-from zDogPy.boilerplate import TAU, extend
+from zDogPy.boilerplate import TAU
 from zDogPy.drawBotRenderer import DrawBotRenderer
 
 # onePoint = { 'x' : 1, 'y' : 1, 'z' : 1 }
