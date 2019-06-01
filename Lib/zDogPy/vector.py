@@ -6,6 +6,7 @@ reload(zDogPy.boilerplate)
 
 import math
 from zDogPy.boilerplate import TAU, lerp
+
 class Vector:
 
     x = 0
@@ -63,14 +64,14 @@ class Vector:
     #     self.z = result.z
     #     return self
 
-    # def translate(self, translation):
-    #     if not translation:
-    #         return
-    #     result = self.add(translation)
-    #     self.x = result.x
-    #     self.y = result.y
-    #     self.z = result.z
-    #     return self
+    def translate(self, translation):
+        if not translation:
+            return
+        result = self.add(translation)
+        self.x = result.x
+        self.y = result.y
+        self.z = result.z
+        return self
 
     def rotate(self, rotation):
         if rotation is None:
@@ -176,7 +177,7 @@ class Vector:
 
     def magnitude(self):
         _sum = self.x * self.x + self.y * self.y + self.z * self.z
-        return getMagnitudeSqrt(_sum)
+        return self.getMagnitudeSqrt(_sum)
 
     def getMagnitudeSqrt(self, sum_):
         # PERF: check if sum ~= 1 and skip sqrt
@@ -186,7 +187,7 @@ class Vector:
 
     def magnitude2d(self):
         _sum = self.x * self.x + self.y * self.y
-        return getMagnitudeSqrt(_sum)
+        return self.getMagnitudeSqrt(_sum)
 
     def copy(self):
         return Vector(self)

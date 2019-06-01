@@ -7,8 +7,8 @@ class DrawBotRenderer:
 
     isDrawBot = True
 
-    # def __init__(self):
-    #     pass
+    def __init__(self):
+        self.ctx = ctx
 
     def __repr__(self):
         return f'<zDog DrawBotRenderer>'
@@ -42,7 +42,7 @@ class DrawBotRenderer:
 
         ctx.drawPath()
 
-    def stroke(self, isStroke, color, lineWidth):
+    def stroke(self, isStroke, color, lineWidth, lineCap='round', lineJoin='round'):
         if not isStroke:
             return
 
@@ -51,6 +51,8 @@ class DrawBotRenderer:
 
         ctx.strokeWidth(lineWidth)
         ctx.stroke(*color)
+        ctx.lineCap(lineCap)
+        ctx.lineJoin(lineJoin)
 
     def fill(self, isFill, color):
         if not isFill:

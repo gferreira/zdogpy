@@ -74,8 +74,6 @@ class Illustration(Anchor):
             ctx.rect(0, 0, self.width, self.height)
 
         ctx.blendMode(self.blendMode)
-        ctx.lineCap('round')
-        ctx.lineJoin('round')
         ctx.save()
 
         if self.centered:

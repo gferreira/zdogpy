@@ -11,7 +11,7 @@ import zDogPy.vector
 reload(zDogPy.vector)
 
 from zDogPy.anchor import Anchor
-from zDogPy.boilerplate import TAU
+from zDogPy.boilerplate import TAU, hexToRGB
 from zDogPy.pathCommand import PathCommand
 from zDogPy.vector import Vector
 
@@ -26,7 +26,7 @@ class Shape(Anchor):
 
     pathCommands = []
 
-    def __init__(self, stroke=1, fill=False, color=(0, 1, 0), closed=True, visible=True, path=[], front=dict(z=1), backface=True, **kwargs):
+    def __init__(self, stroke=1, fill=False, color=(0, 1, 0), closed=True, visible=True, path=[{'x':0}], front=dict(z=1), backface=True, **kwargs):
         Anchor.__init__(self, **kwargs)
 
         self.stroke   = stroke
@@ -139,7 +139,7 @@ class Shape(Anchor):
             return
 
         # do not render if hiding backface
-        # self.isFacingBack = self.renderNormal.z > 0
+        self.isFacingBack = self.renderNormal.z > 0
         # if not (self.backface and self.isFacingBack):
         #     return
 
@@ -147,13 +147,14 @@ class Shape(Anchor):
             print(f'Zdog renderer required. Set to {renderer}')
 
         # render dot or path
-        # isDot = length == 1
-        # if isDot:
-        #     self.renderDrawBotDot(ctx, renderer)
-        # else:
-        self.renderPath(ctx, renderer)
+        isDot = length == 1
+        if isDot:
+            self.renderDrawBotDot(ctx, renderer)
+        else:
+            self.renderPath(ctx, renderer)
 
-    def renderDrawBotDot(self, ctx):
+    def renderDrawBotDot(self, ctx, renderer):
+
         # render lines with no size as circle
         lineWidth = self.getLineWidth()
         if not lineWidth:
@@ -174,9 +175,14 @@ class Shape(Anchor):
         return self.stroke
 
     def getRenderColor(self):
+
         # use backface color if applicable
         isBackfaceColor = isinstance(self.backface, str) and self.isFacingBack
         color = self.backface if isBackfaceColor else self.color
+
+        if type(color) is str:
+            color = hexToRGB(color)
+
         return color
 
     def renderPath(self, ctx, renderer):

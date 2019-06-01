@@ -3,8 +3,6 @@
 from importlib import reload
 import zDogPy.boilerplate
 reload(zDogPy.boilerplate)
-import zDogPy.shape
-reload(zDogPy.shape)
 import zDogPy.vector
 reload(zDogPy.vector)
 import zDogPy.drawBotRenderer
@@ -12,12 +10,9 @@ reload(zDogPy.drawBotRenderer)
 
 from functools import cmp_to_key
 import drawBot as ctx
-# from zDogPy.shape import Shape
 from zDogPy.vector import Vector
 from zDogPy.boilerplate import TAU
 from zDogPy.drawBotRenderer import DrawBotRenderer
-
-# onePoint = { 'x' : 1, 'y' : 1, 'z' : 1 }
 
 def shapeSorter(a, b):
     return a.sortValue - b.sortValue

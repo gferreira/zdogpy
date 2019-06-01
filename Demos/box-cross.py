@@ -29,7 +29,7 @@ D = 20
 
 boxOptions = {
     'addTo'  : model,
-    # 'stroke' : 0,
+    'stroke' : 1,
     'fill'   : True,
     'color'  : (1, 0, 0, 0.5),
     'width'  : D, 
@@ -51,72 +51,16 @@ Box(translate={ 'x' :  D }, **boxOptions) # left   # rightFace=False
 Box(translate={ 'x' : -D }, **boxOptions) # right  # leftFace=False
 
 dotOptions = {
-
+    'addTo'  : model,
+    'stroke' : D, 
 }
 
-Shape(
-    addTo=model,
-    path=[{ 'x': 0, 'y': 0 }],
-    translate={ 'y': -D*2 },
-    stroke=D, 
-    color=gold)
-
-Shape(
-    addTo=model,
-    path=[{ 'x': 0, 'y': 0 }],
-    translate={ 'y': D*2 },
-    stroke=D, 
-    color=gold)
-
-Shape(
-    addTo=model,
-    path=[{ 'x': 0, 'y': 0 }],
-    translate={ 'x': -D*2 },
-    stroke=D, 
-    color=yellow)
-
-Shape(
-    addTo=model,
-    path=[{ 'x': 0, 'y': 0 }],
-    translate={ 'x': D*2 },
-    stroke=D, 
-    color=garnet)
-
-Shape(
-    addTo=model,
-    path=[{ 'x': 0, 'y': 0 }],
-    translate={ 'z': -D*2 },
-    stroke=D, 
-    color=orange)
-
-Shape(
-    addTo=model,
-    path=[{ 'x': 0, 'y': 0 }],
-    translate={ 'z': D*2 },
-    stroke=D, 
-    color=eggplant)
-
-# dot.copy({
-#   translate: { y: 2 },
-#   color: gold,
-# });
-
-# dot.copy({
-#   translate: { x: -2 },
-#   color: yellow,
-# });
-# dot.copy({
-#   translate: { x: 2 },
-#   color: garnet,
-# });
-# dot.copy({
-#   translate: { z: -2 },
-#   color: orange,
-# });
-# dot.copy({
-#   translate: { z: 2 },
-#   color: eggplant,
-# });
+Shape(translate={ 'y': -D*2 }, color=gold, **dotOptions)
+Shape(translate={ 'y':  D*2 }, color=gold, **dotOptions)
+Shape(translate={ 'x': -D*2 }, color=yellow, **dotOptions)
+Shape(translate={ 'x':  D*2 }, color=garnet, **dotOptions)
+Shape(translate={ 'z': -D*2 }, color=orange, **dotOptions)
+Shape(translate={ 'z':  D*2 }, color=eggplant, **dotOptions)
 
 I.showInterface()
 I.updateRenderGraph()

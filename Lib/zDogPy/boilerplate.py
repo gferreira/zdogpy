@@ -48,7 +48,7 @@ def hexToRGB(hexColor):
     rgb = []
     for i in range(0, L, L // 3):
         rgb += (int(hexColor[i:i + L // 3], 16) / 255,)
-    return rgb
+    return tuple(rgb)
 
 def RGBToHex(rgbColor):
     r, g, b = rgbColor
