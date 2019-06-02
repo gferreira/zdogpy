@@ -17,11 +17,11 @@ def mapNewVector(point):
 
 class PathCommand:
 
-    def __init__(self, method, points, previousPoint):
+    def __init__(self, method, points, previousPoint=None):
 
         self.method         = method
-        self.points         = [mapVectorPoint(point) for point in points]
-        self.renderPoints   = [mapNewVector(point) for point in points]
+        self.points         = [ mapVectorPoint(point) for point in points ]
+        self.renderPoints   = [ mapNewVector(point) for point in points ]
         self.previousPoint  = previousPoint
 
         # arc actions come with previous point & corner point

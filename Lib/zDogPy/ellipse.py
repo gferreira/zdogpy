@@ -20,8 +20,8 @@ class Ellipse(Shape):
         return '<zDog Ellipse>'
 
     def setPath(self):
-        width  = self.width  if self.width  else self.diameter
-        height = self.height if self.height else self.diameter
+        width  = self.width  if self.width  is not None else self.diameter
+        height = self.height if self.height is not None else self.diameter
         x = width  / 2
         y = height / 2
         self.path = [
