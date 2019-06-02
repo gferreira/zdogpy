@@ -19,7 +19,13 @@ class Illustration(Anchor):
     width = height = 1000
 
     blendMode = 'normal'
-    color = None
+    color     = None
+
+    variables = [
+        dict(name="rotateX", ui="Slider", args=dict(value=0, minValue=0, maxValue=TAU)),
+        dict(name="rotateY", ui="Slider", args=dict(value=0, minValue=0, maxValue=TAU)),
+        dict(name="rotateZ", ui="Slider", args=dict(value=0, minValue=0, maxValue=TAU)),
+    ]
 
     def __init__(self, **kwargs):
         Anchor.__init__(self, **kwargs)
@@ -51,8 +57,8 @@ class Illustration(Anchor):
     # DrawBot
     # -------
 
-    # def render(self, ctx, renderer):
-    #     pass
+    def render(self, ctx, renderer):
+        pass
 
     def setSize(self, width, height):
         self.width  = width  * self.pixelRatio
@@ -89,11 +95,7 @@ class Illustration(Anchor):
 
     def showInterface(self):
 
-        ctx.Variable([
-            dict(name="rotateX", ui="Slider", args=dict(value=0, minValue=0, maxValue=TAU)),
-            dict(name="rotateY", ui="Slider", args=dict(value=0, minValue=0, maxValue=TAU)),
-            dict(name="rotateZ", ui="Slider", args=dict(value=0, minValue=0, maxValue=TAU)),
-        ], globals())
+        ctx.Variable(self.variables, globals())
 
         self.rotate.x = rotateX
         self.rotate.y = rotateY

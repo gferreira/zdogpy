@@ -1,7 +1,18 @@
 '''Cone composite shape'''
 
-from math import sin, cos, acos, atan2
+from importlib import reload
+import zDogPy.boilerplate
+reload(zDogPy.boilerplate)
+import zDogPy.vector
+reload(zDogPy.vector)
+import zDogPy.pathCommand
+reload(zDogPy.pathCommand)
+import zDogPy.anchor
+reload(zDogPy.anchor)
+import zDogPy.ellipse
+reload(zDogPy.ellipse)
 
+from math import sin, cos, acos, atan2
 from zDogPy.boilerplate import TAU
 from zDogPy.vector import Vector
 from zDogPy.pathCommand import PathCommand
@@ -37,6 +48,9 @@ class Cone(Ellipse):
             PathCommand('line', [{}], None),
             PathCommand('line', [{}], None),
         ]
+
+    def __repr__(self):
+        return '<zDog Cone>'
 
     def render(self, ctx, renderer):
         self.renderConeSurface(ctx, renderer)
@@ -97,4 +111,3 @@ class Cone(Ellipse):
     def setSurfaceRenderPoint(self, index, point):
         renderPoint = self.surfacePathCommands[index].renderPoints[0]
         renderPoint.set(point)
-
