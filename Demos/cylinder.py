@@ -16,7 +16,7 @@ garnet = '#C25'
 
 C = Cylinder(addTo=I,
     diameter=10,
-    length=40,
+    length=20,
     translate={ 'x': 4, 'y': -4 },
     rotate={ 'x': TAU/4 },
     color=gold,
