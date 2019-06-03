@@ -1,12 +1,12 @@
-from importlib import reload
-import zDogPy.boilerplate
-reload(zDogPy.boilerplate)
-import zDogPy.illustration
-reload(zDogPy.illustration)
-import zDogPy.rect
-reload(zDogPy.rect)
-import zDogPy.ellipse
-reload(zDogPy.ellipse)
+# from importlib import reload
+# import zDogPy.boilerplate
+# reload(zDogPy.boilerplate)
+# import zDogPy.illustration
+# reload(zDogPy.illustration)
+# import zDogPy.rect
+# reload(zDogPy.rect)
+# import zDogPy.ellipse
+# reload(zDogPy.ellipse)
 
 from zDogPy.boilerplate import TAU
 from zDogPy.illustration import Illustration

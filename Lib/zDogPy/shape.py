@@ -26,7 +26,7 @@ class Shape(Anchor):
 
     pathCommands = []
 
-    def __init__(self, stroke=1, fill=False, color=(0, 1, 0), closed=True, visible=True, path=[{'x':0}], front=dict(z=1), backface=True, **kwargs):
+    def __init__(self, stroke=1, fill=False, color=(0, 1, 0), closed=True, visible=True, path=[dict(x=0, y=0, z=0)], front=dict(z=1), backface=True, **kwargs):
         Anchor.__init__(self, **kwargs)
 
         self.stroke   = stroke
@@ -39,12 +39,12 @@ class Shape(Anchor):
 
         self.updatePath()
 
-        self.front = Vector(**front)
+        self.front = Vector(**front) if type(front) is dict else front
         self.renderFront  = Vector(self.front)
         self.renderNormal = Vector()
 
     def __repr__(self):
-        return '<zDog Shape>'
+        return '<zDogPy Shape>'
 
     def updatePath(self):
         self.setPath()
@@ -56,17 +56,16 @@ class Shape(Anchor):
     def updatePathCommands(self):
         '''Parse path into PathCommands.'''
 
-        previousPoint = None
-
         if not self.path:
             return
 
-        self.pathCommands = []
+        previousPoint = None
 
+        self.pathCommands = []
         for i, pathPart in enumerate(self.path):
 
             # pathPart can be just vector coordinates -> { x, y, z }
-            # or path instruction -> { arc: [ {x0,y0,z0}, {x1,y1,z1} ] }
+            # or path instruction -> { arc: [ {x0, y0, z0}, {x1, y1, z1} ] }
             keys   = pathPart.keys()
             method = list(keys)[0]
             points = pathPart[method]
@@ -195,3 +194,20 @@ class Shape(Anchor):
         renderer.fill(self.fill, color)
         renderer.renderPath(self.pathCommands, isClosed)
         renderer.end()
+
+    # ----
+    # copy
+    # ----
+
+    copyAttrs = [
+        'stroke',
+        'fill',
+        'color',
+        'closed',
+        'visible',
+        'path',
+        'front',
+        'backface',
+        'renderFront',
+        'renderNormal',
+    ] + Anchor.copyAttrs

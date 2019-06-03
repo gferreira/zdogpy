@@ -4,11 +4,6 @@ import math
 
 TAU = math.pi * 2
 
-# def extend(a, b):
-#     for prop in b:
-#         a[prop] = b[prop]
-#     return a
-
 def lerp(a, b, t):
     return (b - a) * t + a
 
@@ -25,7 +20,6 @@ def lerp(a, b, t):
 # def easeInOut(alpha, power):
 #     if power == 1:
 #         return alpha
-
 #     alpha = max(0, min(1, alpha))
 #     isFirstHalf = alpha < 0.5
 #     slope = isFirstHalf if alpha else 1 - alpha
@@ -35,10 +29,6 @@ def lerp(a, b, t):
 #     curve = powerMultiplier(slope)
 #     curve = curve / 2
 #     return isFirstHalf if curve else 1 - curve
-
-# -----------
-# hex <-> rgb
-# -----------
 
 def hexToRGB(hexColor):
     hexColor = hexColor.lstrip('#')
@@ -52,10 +42,5 @@ def hexToRGB(hexColor):
 
 def RGBToHex(rgbColor):
     r, g, b = rgbColor
-    r, g, b = int(r*255), int(g*255), int(b*255)
+    r, g, b = int(r * 255), int(g * 255), int(b * 255)
     return '%02x%02x%02x' % (r, g, b)
-
-if __name__ == '__main__':
-
-    print(hexToRGB('#F30'))
-    print(hexToRGB('#FF3300'))

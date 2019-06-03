@@ -38,7 +38,7 @@ class CylinderGroup(Group):
         ]
 
     def __repr__(self):
-        return '<zDog CylinderGroup>'
+        return '<zDogPy CylinderGroup>'
 
     def render(self, ctx, renderer):
         self.renderCylinderSurface(ctx, renderer)
@@ -121,7 +121,7 @@ class Cylinder(Shape):
             **groupOptions)
 
     def __repr__(self):
-        return f'<zDog Cylinder {self.diameter} {self.length}>'
+        return f'<zDogPy Cylinder {self.diameter} {self.length}>'
 
     def render(self, ctx, renderer):
         # Cylinder shape does not render anything

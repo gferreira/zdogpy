@@ -30,7 +30,7 @@ class PathCommand:
             self.controlPoints = [Vector(), Vector()]
 
     def __repr__(self):
-        return f'<zDog PathCommand {self.method}>'
+        return f'<zDogPy PathCommand {self.method}>'
 
     @property
     def endRenderPoint(self):
@@ -44,7 +44,6 @@ class PathCommand:
             renderPoint.set(point)
 
     def transform(self, translation, rotation, scale):
-
         renderPoints = []
         for renderPoint in self.renderPoints:
             pt = renderPoint.copy()
@@ -92,5 +91,3 @@ class PathCommand:
         cp1.set(end).lerp(corner, c)
 
         return renderer.bezier(cp0, cp1, end)
-
-

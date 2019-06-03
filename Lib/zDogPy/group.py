@@ -45,8 +45,6 @@ class Group(Anchor):
         # get flat graph only used for group
         # do not include in parent flatGraphs
 
-        # print(self.children)
-
         # do not include self
         flatGraph = []
         for child in self.children:

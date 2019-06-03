@@ -17,7 +17,7 @@ class Vector:
         self.set(position, **kwargs)
 
     def __repr__(self):
-        return f'<zDog Vector {self.x} {self.y} {self.z}>'
+        return f'<zDogPy Vector {self.x} {self.y} {self.z}>'
 
     def set(self, pos, **kwargs):
 
@@ -55,14 +55,14 @@ class Vector:
             self.z = z
         return self
 
-    # def scale(self, scale):
-    #     if not scale:
-    #         return
-    #     result = self.multiply(scale)
-    #     self.x = result.x
-    #     self.y = result.y
-    #     self.z = result.z
-    #     return self
+    def scale(self, scale):
+        if not scale:
+            return
+        result = self.multiply(scale)
+        self.x = result.x
+        self.y = result.y
+        self.z = result.z
+        return self
 
     def translate(self, translation):
         if not translation:
@@ -134,7 +134,6 @@ class Vector:
         if pos is None:
             return # self
 
-        # result = self.copy()
         self.x -= pos.x if isinstance(pos, Vector) else 0
         self.y -= pos.y if isinstance(pos, Vector) else 0
         self.z -= pos.z if isinstance(pos, Vector) else 0
@@ -191,51 +190,3 @@ class Vector:
 
     def copy(self):
         return Vector(self)
-
-
-if __name__ == '__main__':
-
-    v1 = Vector()
-    print('v1:', v1)
-
-    v2 = Vector(10)
-    print('v2:', v2)
-
-    v3 = v2.copy()
-    v3.add(v2)
-    print('v3:', v3)
-    print('v1:', v1)
-    print('v2:', v2)
-    print()
-
-    # v3 = Vector()
-    # v3.add(v2)
-    # print('v3:', v3)
-
-    v4 = Vector(y=30, z=20)
-    print('v4:', v4)
-
-    v5 = v4.copy()
-    v5.multiply(2)
-    print('v5:', v5)
-
-#     v8 = v2.copy()
-#     # print('v8:', v8)
-#     v8.transform(Vector(x=10), Vector(), Vector(3))
-#     # v8.rotate(Vector(x=10, y=0, z=0))
-#     # print('v8:', v8)
-#     # print('v2:', v2)
-
-#     translation = Vector(x=10)
-#     rotation    = Vector()
-#     scale       = Vector(3)
-#     print(translation, rotation, scale)
-
-#     v9 = Vector(x=10, y=20, z=0)
-#     print(v9)
-#     # # print(translation)
-#     # # print(v9.add(translation))
-#     v9.transform(translation, rotation, scale)
-#     # # print()
-#     print(v9)
-# #

@@ -18,7 +18,7 @@ class Polygon(Shape):
         Shape.__init__(self, **kwargs)
 
     def __repr__(self):
-        return '<zDog Polygon>'
+        return '<zDogPy Polygon>'
 
     def setPath(self):
         self.path = []

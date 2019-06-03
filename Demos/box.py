@@ -1,37 +1,39 @@
-# from importlib import reload
-# import zDogPy.boilerplate
-# reload(zDogPy.boilerplate)
-# import zDogPy.illustration
-# reload(zDogPy.illustration)
-# import zDogPy.box
-# reload(zDogPy.box)
+from importlib import reload
+import zDogPy.boilerplate
+reload(zDogPy.boilerplate)
+import zDogPy.illustration
+reload(zDogPy.illustration)
+import zDogPy.box
+reload(zDogPy.box)
 
 from zDogPy.boilerplate import TAU
 from zDogPy.illustration import Illustration
 from zDogPy.box import Box
 
-D = 20
-c1 = 1, 0, 0, 0.5 # True
-c2 = 0, 1, 0, 0.5 # True
-c3 = 0, 0, 1, 0.5 # True
+orange   = '#E62'
+garnet   = '#C25'
+eggplant = '#636'
+
+side = 20
 
 I = Illustration()
 I.centered = True
 I.setSize(50, 50)
 
 B = Box(addTo=I,
-    stroke=5,
+    stroke=3,
     fill=True,
-    color=(1, 0, 0, 0.5),
-    width=D, 
-    height=D, 
-    depth=D,
-    topFace=c1,
-    rearFace=c2,
-    leftFace=c3,
-    rightFace=c3,
-    frontFace=c2,
-    bottomFace=c1,
+    rotate={'x' : TAU/8, 'y' : TAU/8, 'y' : TAU/8}, 
+    color=(1, 0, 0, 0.4),
+    width=side, 
+    height=side, 
+    depth=side,
+    topFace=garnet,
+    rearFace=orange,
+    leftFace=eggplant,
+    rightFace=eggplant,
+    frontFace=orange,
+    bottomFace=garnet,
 )
 
 I.showInterface()

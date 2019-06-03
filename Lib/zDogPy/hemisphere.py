@@ -53,7 +53,6 @@ class Hemisphere(Ellipse):
                 y=domeRadius * sin(a)),
         ]
         pts = [p.add(self.renderOrigin) for p in pts]
-        print(self.renderOrigin)
 
         renderer.stroke(self.stroke, self.color, self.getLineWidth())
         renderer.fill(self.fill, self.color)
@@ -63,5 +62,3 @@ class Hemisphere(Ellipse):
         # renderer.closePath()
         ctx.drawPath()
         renderer.end()
-
-

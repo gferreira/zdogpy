@@ -50,7 +50,7 @@ class Cone(Ellipse):
         ]
 
     def __repr__(self):
-        return '<zDog Cone>'
+        return '<zDogPy Cone>'
 
     def render(self, ctx, renderer):
         self.renderConeSurface(ctx, renderer)
@@ -80,7 +80,7 @@ class Cone(Ellipse):
         # update tangents
         apexAngle     = atan2(self.renderNormal.y, self.renderNormal.x ) + TAU / 2
         projectLength = apexDistance / eccen
-        projectAngle  = acos(radius / projectLength) ##
+        projectAngle  = acos(radius / projectLength)
 
         # set tangent points
         tangentA = self.tangentA

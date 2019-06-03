@@ -19,6 +19,12 @@ def shapeSorter(a, b):
 
 class Anchor(Vector):
 
+    # TODO: make setter/getter for transformation vectors
+    # int or float / Vector / dict
+    # - _translate
+    # - _rotate
+    # - _scale
+
     def __init__(self, rotate=None, translate=None, scale=None, addTo=None, **kwargs):
 
         self.addTo = addTo
@@ -39,7 +45,7 @@ class Anchor(Vector):
         if rotate is None:
             self.rotate = Vector()
         elif isinstance(translate, Vector):
-            self.rotate = Vector(**rotate)
+            self.rotate = rotate
         elif isinstance(rotate, dict):
             self.rotate = Vector(**rotate)
         elif isinstance(rotate, float) or isinstance(rotate, int):
@@ -48,7 +54,7 @@ class Anchor(Vector):
         if scale is None:
             self.scale = Vector()
         elif isinstance(translate, Vector):
-            self.scale = Vector(**scale)
+            self.scale = scale
         elif isinstance(scale, dict):
             self.scale = Vector(**scale)
         elif isinstance(scale, float) or isinstance(scale, int):
@@ -64,7 +70,7 @@ class Anchor(Vector):
             self.addTo.addChild(self)
 
     def __repr__(self):
-        return f'<zDog Anchor {self.x} {self.y} {self.z}>'
+        return f'<zDogPy Anchor {self.x} {self.y} {self.z}>'
 
     def setOptions(self, options):
         if not options:
@@ -152,15 +158,35 @@ class Anchor(Vector):
     # misc
     # ----
 
-    # def copy(self):
-    #     pass
+    copyAttrs = [
+        'addTo',
+        'flatGraph',
+        'sortValue',
+        'origin',
+        'renderOrigin',
+        'children',
+        # 'translate', 'rotate', 'scale'
+    ]
 
-    def copyGraph(self, options):
-        # clone = self.copy(options)
-        # for child in self.children:
-        #     child.copyGraph({'addTo' : clone })
-        # return clone
-        pass
+    def copy(self, **kwargs):
+
+        attrsDict = { attr : getattr(self, attr) for attr in self.copyAttrs }
+
+        for attr, value in kwargs.items():
+            attrsDict[attr] = value
+
+        copyClass = self.__class__
+        copyObject = copyClass(**attrsDict)
+
+        return copyObject
+
+    def copyGraph(self, **kwargs):
+        clone = self.copy(**kwargs)
+        for child in self.children:
+            print(child.translate, child.rotate, child.scale)
+            child.copyGraph(addTo=clone)
+            clone
+        return clone
 
     def normalizeRotate(self):
         self.rotate.x = self.rotate.x % TAU

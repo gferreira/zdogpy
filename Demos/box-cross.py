@@ -23,7 +23,7 @@ I = Illustration()
 I.color = '#FDB'
 I.setSize(120, 120)
 
-model = Anchor(addTo=I)
+model = Anchor(addTo=I, rotate=TAU/8)
 
 D = 20
 
@@ -32,8 +32,8 @@ boxOptions = {
     'stroke' : 1,
     'fill'   : True,
     'color'  : (1, 0, 0, 0.5),
-    'width'  : D, 
-    'height' : D, 
+    'width'  : D,
+    'height' : D,
     'depth'  : D,
     'topFace'    : yellow,
     'rearFace'   : gold,
@@ -52,7 +52,7 @@ Box(translate={ 'x' : -D }, **boxOptions) # right  # leftFace=False
 
 dotOptions = {
     'addTo'  : model,
-    'stroke' : D, 
+    'stroke' : D,
 }
 
 Shape(translate={ 'y': -D*2 }, color=gold, **dotOptions)

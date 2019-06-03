@@ -1,6 +1,5 @@
 '''RoundedRect'''
 
-
 from importlib import reload
 import zDogPy.shape
 reload(zDogPy.shape)
@@ -17,13 +16,16 @@ class RoundedRect(Shape):
         Shape.__init__(self, **kwargs)
 
     def __repr__(self):
-        return f'<zDog RoundedRect {self.width} {self.height}>'
+        return f'<zDogPy RoundedRect {self.width} {self.height}>'
 
     def setPath(self):
+
         xA = self.width / 2
         yA = self.height / 2
-        shortSide    = min(xA, yA)
+
+        shortSide = min(xA, yA)
         cornerRadius = min(self.cornerRadius, shortSide)
+
         xB = xA - cornerRadius
         yB = yA - cornerRadius
 
@@ -35,7 +37,6 @@ class RoundedRect(Shape):
               { 'x' : xA, 'y' : -yB },
             ]},
         ]
-
         # bottom right corner
         if yB:
             path.append({ 'x' : xA, 'y' : yB })
@@ -43,7 +44,6 @@ class RoundedRect(Shape):
                 { 'x' : xA, 'y' :  yA },
                 { 'x' : xB, 'y' :  yA },
             ]})
-
         # bottom left corner
         if xB:
             path.append({ 'x' : -xB, 'y' : yA })
@@ -51,7 +51,6 @@ class RoundedRect(Shape):
                 { 'x' : -xA, 'y' : yA },
                 { 'x' : -xA, 'y' : yB },
             ]})
-
         # top left corner
         if yB:
             path.append({ 'x' : -xA, 'y' : -yB })
@@ -59,16 +58,15 @@ class RoundedRect(Shape):
                 { 'x' : -xA, 'y' : -yA },
                 { 'x' : -xB, 'y' : -yA },
             ]})
-
         # back to top right corner
         if xB:
             path.append({ 'x' : xB, 'y' : -yA })
 
         self.path = path
 
-def updateSortValue(self):
-    Shape.updateSortValue(self)
-    # ellipse is self closing, do not count last point twice
-    length = len(self.pathCommands)
-    lastPoint = self.pathCommands[length - 1].endRenderPoint
-    self.sortValue -= lastPoint.z / length
+    def updateSortValue(self):
+        Shape.updateSortValue(self)
+        # ellipse is self closing, do not count last point twice
+        length = len(self.pathCommands)
+        lastPoint = self.pathCommands[length - 1].endRenderPoint
+        self.sortValue -= lastPoint.z / length

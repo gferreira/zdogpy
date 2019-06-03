@@ -1,8 +1,8 @@
-from importlib import reload
-import zDogPy.illustration
-reload(zDogPy.illustration)
-import zDogPy.shape
-reload(zDogPy.shape)
+# from importlib import reload
+# import zDogPy.illustration
+# reload(zDogPy.illustration)
+# import zDogPy.shape
+# reload(zDogPy.shape)
 
 from zDogPy.boilerplate import TAU
 from zDogPy.illustration import Illustration

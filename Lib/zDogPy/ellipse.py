@@ -17,7 +17,7 @@ class Ellipse(Shape):
         Shape.__init__(self, **kwargs)
 
     def __repr__(self):
-        return '<zDog Ellipse>'
+        return '<zDogPy Ellipse>'
 
     def setPath(self):
         width  = self.width  if self.width  is not None else self.diameter

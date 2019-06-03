@@ -14,7 +14,7 @@ class Rect(Shape):
         Shape.__init__(self, **kwargs)
 
     def __repr__(self):
-        return f'<zDog Rect {self.width} {self.height}>'
+        return f'<zDogPy Rect {self.width} {self.height}>'
 
     def setPath(self):
         x = self.width / 2
@@ -26,3 +26,7 @@ class Rect(Shape):
             { 'x' : -x, 'y' :  y },
         ]
         return self
+
+    copyAttrs = [
+        'width', 'height'
+    ] + Shape.copyAttrs

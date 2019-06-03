@@ -31,7 +31,7 @@ class Illustration(Anchor):
         Anchor.__init__(self, **kwargs)
 
     def __repr__(self):
-        return '<zDog Illustration>'
+        return '<zDogPy Illustration>'
 
     def setSize(self, width, height):
         width  = round(width)

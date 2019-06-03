@@ -1,10 +1,10 @@
-from importlib import reload
-import zDogPy.illustration
-reload(zDogPy.illustration)
-import zDogPy.cone
-reload(zDogPy.cone)
-import zDogPy.ellipse
-reload(zDogPy.ellipse)
+# from importlib import reload
+# import zDogPy.illustration
+# reload(zDogPy.illustration)
+# import zDogPy.cone
+# reload(zDogPy.cone)
+# import zDogPy.ellipse
+# reload(zDogPy.ellipse)
 
 from zDogPy.boilerplate import TAU
 from zDogPy.illustration import Illustration

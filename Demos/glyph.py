@@ -1,10 +1,10 @@
 # run this demo in RF DrawBot with a font open
 
-from importlib import reload
-import zDogPy.illustration
-reload(zDogPy.illustration)
-import zDogPy.glyph
-reload(zDogPy.glyph)
+# from importlib import reload
+# import zDogPy.illustration
+# reload(zDogPy.illustration)
+# import zDogPy.glyph
+# reload(zDogPy.glyph)
 
 from zDogPy.illustration import Illustration
 from zDogPy.glyph import Glyph

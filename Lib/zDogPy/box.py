@@ -96,7 +96,7 @@ class Box(Anchor):
         attr = getattr(self, faceName)
         rectProperty = faceName + 'Rect'
 
-        # remove if False
+        # remove if False (??)
         if not attr:
             # self.removeChild(rectProperty)
             return
@@ -113,9 +113,9 @@ class Box(Anchor):
         rect.fill   = self.fill
         rect.color  = color
 
-        # rect.backface   = self.backface
-        # rect.front      = self.front
-        # rect.visible    = self.visible
+        # rect.backface = self.backface
+        # rect.front    = self.front
+        # rect.visible  = self.visible
 
         rect.updatePath()
         self.addChild(rect)

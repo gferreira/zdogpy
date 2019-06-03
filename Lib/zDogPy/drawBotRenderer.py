@@ -11,7 +11,7 @@ class DrawBotRenderer:
         self.ctx = ctx
 
     def __repr__(self):
-        return f'<zDog DrawBotRenderer>'
+        return f'<zDogPy DrawBotRenderer>'
 
     def begin(self):
         ctx.newPath()

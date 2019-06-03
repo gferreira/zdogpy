@@ -1,14 +1,14 @@
-from importlib import reload
-import zDogPy.illustration
-reload(zDogPy.illustration)
-import zDogPy.boilerplate
-reload(zDogPy.boilerplate)
-import zDogPy.anchor
-reload(zDogPy.anchor)
-import zDogPy.vector
-reload(zDogPy.vector)
-import zDogPy.shape
-reload(zDogPy.shape)
+# from importlib import reload
+# import zDogPy.illustration
+# reload(zDogPy.illustration)
+# import zDogPy.boilerplate
+# reload(zDogPy.boilerplate)
+# import zDogPy.anchor
+# reload(zDogPy.anchor)
+# import zDogPy.vector
+# reload(zDogPy.vector)
+# import zDogPy.shape
+# reload(zDogPy.shape)
 
 from zDogPy.boilerplate import TAU
 from zDogPy.anchor import Anchor
