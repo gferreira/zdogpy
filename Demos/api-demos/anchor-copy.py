@@ -26,5 +26,3 @@ rect2 = rect1.copy(
 
 I.showInterface()
 I.updateRenderGraph()
-
-print(I.children)

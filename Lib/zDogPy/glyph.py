@@ -6,19 +6,25 @@ reload(zDogPy.shape)
 
 from zDogPy.shape import Shape
 
-def makePath(glyph):
+def makePath(glyph, closed=True):
     path = []
+
     for ci, c in enumerate(glyph.contours):
-        pt0 = c[-1][-1]
-        cmd = { 'move' : {'x': pt0.x, 'y': pt0.y } }
-        path.append(cmd)
+        if closed:
+            pt0 = c[-1][-1]
+            cmd = { 'move' : {'x': pt0.x, 'y': pt0.y } }
+            path.append(cmd)
         for si, s in enumerate(c.segments):
-            if not len(s) == 3:
+            if len(s) == 1:
                 pt = s[0]
-                cmd = { 'x': pt.x, 'y': pt.y }
-            else:
+                if si == 0 and not closed:
+                    cmd = { 'move' : { 'x': pt.x, 'y': pt.y } }
+                else:
+                    cmd = { 'x': pt.x, 'y': pt.y }
+            elif len(s) == 3:
                 cmd = { 'bezier' : [{ 'x': pt.x, 'y': pt.y } for pt in s] }
             path.append(cmd)
+
     return path
 
 class Glyph(Shape):
@@ -34,7 +40,7 @@ class Glyph(Shape):
         self.updatePath()
 
     def setPath(self):
-        self.path = makePath(self.glyph)
+        self.path = makePath(self.glyph, closed=self.closed)
 
     def render(self, ctx, renderer):
         Shape.render(self, ctx, renderer)
